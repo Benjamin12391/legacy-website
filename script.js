@@ -12,7 +12,7 @@ function normalizeCode(value) {
 
 function showStatus(message = "", isError = false) {
   statusMessage.textContent = message;
-  statusMessage.style.color = isError ? "#b42318" : "";
+  statusMessage.classList.toggle("error", isError);
 }
 
 function valueOrFallback(value) {
@@ -21,17 +21,11 @@ function valueOrFallback(value) {
 
 function createCountryCard(country) {
   const card = document.createElement("article");
+  card.className = "country-card";
   const title = document.createElement("h2");
   title.textContent = valueOrFallback(country.name);
   card.append(title);
-
-  const details = [
-    ["Region", country.region?.value],
-    ["Einkommensgruppe", country.incomeLevel?.value],
-    ["Hauptstadt", country.capitalCity],
-    ["Breitengrad", country.latitude],
-    ["Längengrad", country.longitude],
-  ];
+  const details = [["Region", country.region?.value], ["Einkommensgruppe", country.incomeLevel?.value], ["Hauptstadt", country.capitalCity], ["Breitengrad", country.latitude], ["Längengrad", country.longitude]];
   const list = document.createElement("dl");
   for (const [label, value] of details) {
     const term = document.createElement("dt");
@@ -60,17 +54,14 @@ form.addEventListener("submit", async (event) => {
   const mainCode = normalizeCode(countryCodeInput.value);
   const compareValue = compareCodeInput.value.trim();
   const compareCode = compareValue ? normalizeCode(compareValue) : null;
-
   if (!mainCode || (compareValue && !compareCode)) {
     showStatus("Bitte gib zwei- oder dreistellige Buchstabencodes ein.", true);
     return;
   }
-
   countryCodeInput.value = mainCode;
   if (compareCode) compareCodeInput.value = compareCode;
   submitButton.disabled = true;
   showStatus("Länderdaten werden geladen …");
-
   try {
     const codes = compareCode ? [mainCode, compareCode] : [mainCode];
     const countries = await Promise.all(codes.map(fetchCountry));

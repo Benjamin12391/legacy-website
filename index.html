@@ -4,29 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Länder-Kurzinfo</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
-    <main>
+    <main class="page-container">
       <header>
-        <p>World Bank Country API</p>
+        <p class="eyebrow">World Bank Country API</p>
         <h1>Länder-Kurzinfo</h1>
         <p>Gib einen zwei- oder dreistelligen ISO-Ländercode ein, zum Beispiel <strong>AT</strong>, <strong>DEU</strong> oder <strong>BRA</strong>.</p>
       </header>
-
       <form id="country-form" novalidate>
-        <label for="country-code">Ländercode</label>
-        <input id="country-code" name="country-code" type="text" value="AT" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" required />
-
-        <label for="compare-code">Vergleichsland (optional)</label>
-        <input id="compare-code" name="compare-code" type="text" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" />
-
-        <button type="submit">Informationen laden</button>
-        <p>Der Code wird direkt in die URL für den API-Aufruf übernommen.</p>
+        <div class="search-fields">
+          <label for="country-code">Ländercode
+            <input id="country-code" name="country-code" type="text" value="AT" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" required />
+          </label>
+          <label for="compare-code">Vergleichsland <span>(optional)</span>
+            <input id="compare-code" name="compare-code" type="text" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" />
+          </label>
+          <button type="submit">Informationen laden</button>
+        </div>
+        <p class="hint">Der Code wird direkt in die URL für den API-Aufruf übernommen.</p>
       </form>
-
-      <p id="status" aria-live="polite"></p>
-      <section id="results" aria-live="polite"></section>
+      <p id="status" class="status" aria-live="polite"></p>
+      <section id="results" class="results" aria-live="polite"></section>
     </main>
   </body>
 </html>

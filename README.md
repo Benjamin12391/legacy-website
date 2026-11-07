@@ -7,15 +7,15 @@
 
 ## 1. Kurzbeschreibung
 
-Die Webanwendung erstellt ein Kurzprofil für ein Land. Nutzer:innen geben einen zwei- oder dreistelligen ISO-Ländercode ein. Die Anwendung lädt passende Daten von der World Bank Country API und stellt sie verständlich dar. Optional lassen sich zwei Länder vergleichen.
+Die Webanwendung erstellt ein Kurzprofil für ein Land. Ein ISO-Ländercode wird an die World Bank Country API übergeben. Die Antwort wird verarbeitet und als Profil mit Region, Einkommensgruppe, Hauptstadt und Koordinaten dargestellt. Optional können zwei Länder verglichen werden.
 
 ## 2. Funktionsumfang
 
-- **Seite 1:** `index.html` enthält die Ländersuche, den optionalen Ländervergleich sowie die dynamischen Ergebnis-Karten.
-- **Seite 2:** `ueber.html` erklärt Projekt, Datenquelle und Bedienung.
-- **Zentrale Nutzeraktion:** Formular absenden über „Informationen laden“.
-- **API-/JSON-Funktion:** Ein `fetch()`-Request lädt JSON-Daten; das Länderobjekt wird aus `data[1][0]` gelesen.
-- **Add-on / dynamische Benutzereingabe:** Ein optionales zweites Eingabefeld lädt und zeigt ein Vergleichsland an.
+- **Seite 1:** `index.html` bietet die Ländersuche, den Vergleich und dynamisch erzeugte Ergebnis-Karten.
+- **Seite 2:** `ueber.html` enthält Informationen zu Projekt, API und Bedienung.
+- **Zentrale Nutzeraktion:** Formular mit „Informationen laden“ absenden.
+- **API-/JSON-Funktion:** `fetch()` ruft die API auf; das Länderobjekt wird aus `data[1][0]` verarbeitet.
+- **Add-on / dynamische Benutzereingabe:** Ein optionales Vergleichsfeld lädt ein zweites Land und erzeugt eine zweite Karte.
 
 ## 3. Verwendete Technologien
 
@@ -53,44 +53,46 @@ https://api.worldbank.org/v2/country/AT?format=json
 
 ## 5. Bedienung
 
-1. `index.html` in einem Browser oder über einen lokalen Webserver öffnen.
-2. Einen zwei- oder dreistelligen ISO-Ländercode eingeben, z. B. `AT`, `DEU` oder `BRA`.
-3. Optional einen zweiten Code für einen Vergleich eingeben.
+1. `index.html` im Browser oder über einen lokalen Webserver öffnen.
+2. Einen zwei- oder dreistelligen ISO-Code eingeben, z. B. `AT`, `DEU` oder `BRA`.
+3. Optional einen zweiten Code im Feld „Vergleichsland“ eintragen.
 4. „Informationen laden“ auswählen.
 
-Klein geschriebene Codes werden automatisch in Großbuchstaben umgewandelt. Ungültige Eingaben, fehlende Datensätze und Netzwerkfehler werden als Meldung angezeigt.
+Codes werden in Großbuchstaben normalisiert. Ungültige Eingaben, fehlende Daten und technische Fehler werden über eine Statusmeldung angezeigt.
 
 ## 6. Projektstruktur
 
 ```text
-Schritt3/
+Schritt4/
 ├── index.html
 ├── ueber.html
 ├── style.css
 ├── script.js
+├── TESTS.md
 └── README.md
 ```
 
 ## 7. Testing
 
-Ein vollständiges Testprotokoll ist in diesem Entwicklungsschritt noch nicht vorhanden; es wird im folgenden Test-Schritt dokumentiert.
+Das vollständige Testprotokoll liegt unter [TESTS.md](TESTS.md).
 
 **Kurzstatus:**
 
-- **PASS:** Noch nicht formal protokolliert.
-- **FAIL:** Keine bekannten, reproduzierten Kernfunktionsfehler.
-- **BLOCKED:** Manueller Browser-, Network- und Responsive-Test steht noch aus.
+- **PASS:** Noch nicht manuell im Browser durchgeführt und daher nicht bestätigt.
+- **FAIL:** T-06 ist ein bewusst konstruierter, dokumentierter Defekt (nicht vorhandene Test-URL).
+- **BLOCKED:** T-01 bis T-05 sowie T-07 und T-08 benötigen die manuelle Durchführung inklusive Evidenz.
 
 **Wichtigste getestete Risiken:**
 
-- Zugriff auf die ungewöhnliche API-Antwort über `data[1][0]` statt `data[0]`.
-- Ungültige, leere und klein geschriebene Ländercodes.
-- Fehlende Werte in einzelnen API-Feldern.
+- API-Request, JSON-Verarbeitung und korrekter Zugriff auf `data[1][0]`.
+- Leere, ungültige und alternative Ländercodes.
+- Navigation, Offline-/API-Fehler und Bedienbarkeit per Tastatur bzw. bei kleinem Viewport.
 
 ## 8. Known Issues
 
-- Die Anwendung benötigt eine Internetverbindung und die Verfügbarkeit der externen World-Bank-API.
-- Bei nicht hinterlegten API-Werten wird „Keine Angabe“ angezeigt.
+- T-06 dokumentiert bewusst eine nicht vorhandene Test-URL als reproduzierbaren FAIL.
+- Die Anwendung ist von der Erreichbarkeit, möglichen Rate-Limits und der Datenqualität der externen World-Bank-API abhängig.
+- Fehlende Einzelwerte der API werden mit „Keine Angabe“ dargestellt.
 
 ## 9. Git / Entwicklungsverlauf
 
@@ -102,12 +104,12 @@ Geplante sinnvolle Entwicklungsschritte:
 2. API-Request und JSON-Auswertung ergänzen.
 3. Dynamische Ergebnisdarstellung und Fehlerbehandlung ergänzen.
 4. Zweite Seite und Navigation hinzufügen.
-5. Dokumentation und Testprotokoll vervollständigen.
+5. Testprotokoll und finale Dokumentation ergänzen.
 
 ## 10. AI Coding
 
-KI wurde zur Unterstützung bei der Erstellung der HTML-, CSS- und JavaScript-Grundstruktur sowie der Dokumentation eingesetzt. Die Implementierung wurde gelesen und geprüft; insbesondere der API-Pfad, der Zugriff auf `data[1][0]`, die Eingabeprüfung und die Fehlerausgabe wurden nachvollzogen und getestet.
+KI wurde zur Unterstützung bei der Erstellung der HTML-, CSS- und JavaScript-Grundstruktur sowie der Testdokumentation eingesetzt. Die Implementierung wurde geprüft und nachvollzogen; insbesondere API-Pfad, `data[1][0]`, Eingabeprüfung, DOM-Erzeugung und Fehleranzeige sind verständlich dokumentiert. Die Testfälle in `TESTS.md` müssen im Browser manuell ausgeführt und mit Evidenz ergänzt werden.
 
 ## 11. Deployment
 
-Ein Deployment auf eine persönliche Legacy-Subdomain ist noch nicht erfolgt. Nach dem Upload muss die Live-URL hier ergänzt und die Ländersuche inklusive API-Request erneut im Browser getestet werden.
+Die finale Version wurde noch nicht auf eine persönliche Legacy-Subdomain hochgeladen. Nach dem Deployment muss die Live-URL ergänzt werden. Anschließend sind mindestens die Kernsuche, Navigation und eine Fehlerbehandlung erneut auf der Live-URL zu testen und im Testprotokoll zu vermerken.

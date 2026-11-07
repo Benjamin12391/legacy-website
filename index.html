@@ -18,22 +18,14 @@
         <h1>Länder-Kurzinfo</h1>
         <p>Gib einen zwei- oder dreistelligen ISO-Ländercode ein, zum Beispiel <strong>AT</strong>, <strong>DEU</strong> oder <strong>BRA</strong>.</p>
       </header>
-
       <form id="country-form" novalidate>
         <div class="search-fields">
-          <label for="country-code">
-            Ländercode
-            <input id="country-code" name="country-code" type="text" value="AT" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" required />
-          </label>
-          <label for="compare-code">
-            Vergleichsland <span>(optional)</span>
-            <input id="compare-code" name="compare-code" type="text" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" />
-          </label>
+          <label for="country-code">Ländercode <input id="country-code" name="country-code" type="text" value="AT" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" required /></label>
+          <label for="compare-code">Vergleichsland <span>(optional)</span><input id="compare-code" name="compare-code" type="text" maxlength="3" pattern="[A-Za-z]{2,3}" autocomplete="off" /></label>
           <button type="submit">Informationen laden</button>
         </div>
         <p class="hint">Der Code wird direkt in die URL für den API-Aufruf übernommen.</p>
       </form>
-
       <p id="status" class="status" aria-live="polite">Noch keine Suche gestartet. Gib einen Ländercode ein und lade die Informationen.</p>
       <section id="results" class="results" aria-live="polite"></section>
     </main>

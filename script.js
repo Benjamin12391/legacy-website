@@ -22,10 +22,18 @@ function valueOrFallback(value) {
 function createCountryCard(country) {
   const card = document.createElement("article");
   card.className = "country-card";
+
   const title = document.createElement("h2");
   title.textContent = valueOrFallback(country.name);
   card.append(title);
-  const details = [["Region", country.region?.value], ["Einkommensgruppe", country.incomeLevel?.value], ["Hauptstadt", country.capitalCity], ["Breitengrad", country.latitude], ["Längengrad", country.longitude]];
+
+  const details = [
+    ["Region", country.region?.value],
+    ["Einkommensgruppe", country.incomeLevel?.value],
+    ["Hauptstadt", country.capitalCity],
+    ["Breitengrad", country.latitude],
+    ["Längengrad", country.longitude],
+  ];
   const list = document.createElement("dl");
   for (const [label, value] of details) {
     const term = document.createElement("dt");
@@ -42,7 +50,9 @@ async function fetchCountry(code) {
   const url = `https://api.worldbank.org/v2/country/${encodeURIComponent(code)}?format=json`;
   const response = await fetch(url);
   if (!response.ok) throw new Error("Die API ist derzeit nicht erreichbar.");
+
   const data = await response.json();
+  // Die Country API liefert Metadaten unter data[0] und das Land unter data[1][0].
   const country = data?.[1]?.[0];
   if (!country) throw new Error(`Für den Ländercode „${code}“ wurden keine Daten gefunden.`);
   return country;
@@ -51,17 +61,21 @@ async function fetchCountry(code) {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   results.replaceChildren();
+
   const mainCode = normalizeCode(countryCodeInput.value);
   const compareValue = compareCodeInput.value.trim();
   const compareCode = compareValue ? normalizeCode(compareValue) : null;
+
   if (!mainCode || (compareValue && !compareCode)) {
     showStatus("Bitte gib zwei- oder dreistellige Buchstabencodes ein.", true);
     return;
   }
+
   countryCodeInput.value = mainCode;
   if (compareCode) compareCodeInput.value = compareCode;
   submitButton.disabled = true;
   showStatus("Länderdaten werden geladen …");
+
   try {
     const codes = compareCode ? [mainCode, compareCode] : [mainCode];
     const countries = await Promise.all(codes.map(fetchCountry));

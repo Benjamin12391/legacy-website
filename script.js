@@ -73,5 +73,3 @@ form.addEventListener("submit", async (event) => {
     submitButton.disabled = false;
   }
 });
-
-form.requestSubmit();
